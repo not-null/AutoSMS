@@ -20,8 +20,16 @@ AutoSMS is an Android app that:
     * [on your Android device](https://developer.android.com/training/basics/firstapp/running-app)
     
 ## Usage
-* Add 
+1. Add a phone number to a person that bothers you.
+2. Add a custom response.
+    * Specify a string that the incoming message should contain - *leave blank for all messages*.
+    * Choose whether the message should **contain**, **start with**, or **end with** your string.
+    * Write a custom response.
 
-### Extra features
-* Intuitive design - swipe to delete items
-* Responsive animations
+**Done!** Now, you will get a notification when the app responds to a message! 🎉
+
+## Demo
+
+## Extra features
+* 👋 Intuitive design - swipe to delete items
+* 🎯 Responsive animations
