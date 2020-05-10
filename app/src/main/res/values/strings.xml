@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AutoSMS</string>
+    <string name="action_settings">Reset</string>
+
+    <string-array name="positions">
+        <item>CONTAINS</item>
+        <item>STARTS</item>
+        <item>ENDS</item>
+    </string-array>
+</resources>

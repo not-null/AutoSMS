@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:orientation="vertical"
+    android:background="#292f46">
+
+    <RelativeLayout
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="@drawable/spinner_bg"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:textColor="#ffff"
+            android:layout_marginHorizontal="5dp"
+            android:spinnerMode="dropdown" />
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:src="@drawable/spinner_icon" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/message"
+        android:layout_marginTop="50dp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/spinner_bg"
+        android:hint="Message..."
+        android:textColorHint="#7884b4"
+        android:maxLines="2"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="7dp"
+        android:gravity="center_vertical"
+        android:letterSpacing="0.1"
+        android:textColor="#7884b4"
+        android:fontFamily="@font/truenoultlt"
+        />
+
+    <EditText
+        android:id="@+id/response"
+        android:layout_marginTop="50dp"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/spinner_bg"
+        android:hint="Response..."
+        android:textColorHint="#7884b4"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="7dp"
+        android:maxLines="2"
+        android:gravity="center_vertical"
+        android:textColor="#7884b4"
+        android:letterSpacing="0.1"
+        android:fontFamily="@font/truenoultlt"
+        />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_orange"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="50dp"
+        android:textColor="#ffff"
+        android:fontFamily="@font/truenorg"
+        android:clickable="true"
+        android:focusable="true"
+        android:letterSpacing="0.1"
+        android:foreground="?android:selectableItemBackground"
+        android:text="Save" />
+
+
+</LinearLayout>
