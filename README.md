@@ -6,6 +6,9 @@
 ![AutoSMS banner](/README_res/banner.png?raw=true)
 
 ## About
+AutoSMS is an Android app that:
+* 🔍 Analyzes the contents of your incoming messages.
+* 💬 Automatically Responds with the responses that YOU define!
 
 ## Installation
 1. Clone this repo.
