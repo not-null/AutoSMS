@@ -25,7 +25,7 @@ AutoSMS is an Android app that:
     * Specify a string that the incoming message should contain - *leave blank for all messages*.
     * Choose whether the message should **contain**, **start with**, or **end with** your string.
     * Write a custom response.
-3. **Done!** Now, you will get a notification when the app responds to a message! 🎉
+3. **Done!** Now, you will get a notification whenever the app responds to a message! 🎉
 
 ## Demo
 
