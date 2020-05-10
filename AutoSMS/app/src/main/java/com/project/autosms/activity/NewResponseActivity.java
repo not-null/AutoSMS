@@ -1,4 +1,4 @@
-package com.mobillabb4.autosms.activity;
+package com.project.autosms.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,9 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.mobillabb4.autosms.model.Position;
-import com.mobillabb4.autosms.R;
-import com.mobillabb4.autosms.model.ResponseMapping;
+import com.project.autosms.model.Position;
+import com.project.autosms.R;
+import com.project.autosms.model.ResponseMapping;
 
 public class NewResponseActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.mobillabb4.autosms.model;
+package com.project.autosms.model;
 
 import androidx.annotation.NonNull;
 

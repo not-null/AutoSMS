@@ -1,4 +1,4 @@
-package com.mobillabb4.autosms.brodcastReceiver;
+package com.project.autosms.brodcastReceiver;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -16,9 +16,9 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.mobillabb4.autosms.activity.MainActivity;
-import com.mobillabb4.autosms.model.ResponseManager;
-import com.mobillabb4.autosms.R;
+import com.project.autosms.activity.MainActivity;
+import com.project.autosms.model.ResponseManager;
+import com.project.autosms.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

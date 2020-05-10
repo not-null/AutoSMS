@@ -1,4 +1,4 @@
-package com.mobillabb4.autosms;
+package com.project.autosms;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.mobillabb4.autosms", appContext.getPackageName());
+        assertEquals("com.project.autosms", appContext.getPackageName());
     }
 }

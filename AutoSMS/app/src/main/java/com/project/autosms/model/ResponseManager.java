@@ -1,9 +1,9 @@
-package com.mobillabb4.autosms.model;
+package com.project.autosms.model;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.mobillabb4.autosms.util.SerializeHandler;
+import com.project.autosms.util.SerializeHandler;
 
 import java.util.ArrayList;
 

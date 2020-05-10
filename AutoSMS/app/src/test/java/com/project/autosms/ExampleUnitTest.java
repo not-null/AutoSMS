@@ -1,4 +1,4 @@
-package com.mobillabb4.autosms;
+package com.project.autosms;
 
 import org.junit.Test;
 

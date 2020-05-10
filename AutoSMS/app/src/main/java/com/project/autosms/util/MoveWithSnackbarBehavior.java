@@ -1,4 +1,4 @@
-package com.mobillabb4.autosms.util;
+package com.project.autosms.util;
 
 import android.content.Context;
 import android.util.AttributeSet;

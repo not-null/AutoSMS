@@ -1,4 +1,4 @@
-package com.mobillabb4.autosms.adapter;
+package com.project.autosms.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mobillabb4.autosms.R;
-import com.mobillabb4.autosms.model.Record;
+import com.project.autosms.R;
+import com.project.autosms.model.Record;
 
 import java.util.ArrayList;
 
