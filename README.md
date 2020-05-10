@@ -28,6 +28,9 @@ AutoSMS is an Android app that:
 3. **Done!** Now, you will get a notification whenever the app responds to a message! 🎉
 
 ## Demo
+<p align="center">
+   <img src="/README_res/AutoSMS_demo.gif" height="500" />
+</p>
 
 ## Extra features
 * 👋 Intuitive design - swipe to delete items
