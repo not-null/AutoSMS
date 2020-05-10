@@ -42,7 +42,7 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHold
     // Total number of rows
     @Override
     public int getItemCount() {
-        return records.size();
+        return records == null ? 0 : records.size();
     }
 
     // Binds the data to the TextView in each row

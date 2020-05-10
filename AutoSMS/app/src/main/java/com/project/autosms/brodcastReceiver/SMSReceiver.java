@@ -1,5 +1,6 @@
 package com.project.autosms.brodcastReceiver;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
@@ -49,11 +51,11 @@ public class SMSReceiver extends BroadcastReceiver {
 
             // Get information from the SMS
             SmsMessage sms = msgs[0]; // TODO: Check if only using the first SMS impacts functionality
-            String sender = sms.getOriginatingAddress();
+            final String sender = sms.getOriginatingAddress();
             String message = sms.getMessageBody();
 
             // Get the appropriate response
-            String response = ResponseManager.getResponse(sender, message, context);
+            final String response = ResponseManager.getResponse(sender, message, context);
 
             if (response != null) {
                 System.out.println("Responding to " + sender);
@@ -65,7 +67,8 @@ public class SMSReceiver extends BroadcastReceiver {
                     .setContentText("\"" + response + "\"")
                     .setSmallIcon(R.mipmap.transparent_icon)
                     .setColorized(true)
-                    .setColor(Color.parseColor("#292f46"));
+                    .setColor(Color.parseColor("#292f46"))
+                    .setPriority(Notification.PRIORITY_MAX);
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O ) {
                     NotificationChannel notificationChannel = new NotificationChannel("1" , "Response", NotificationManager.IMPORTANCE_DEFAULT) ;
@@ -86,8 +89,13 @@ public class SMSReceiver extends BroadcastReceiver {
                 nm.notify(createID(), mBuilder.build());
 
                 // Send the response
-                SmsManager smsManager = SmsManager.getDefault();
+                final SmsManager smsManager = SmsManager.getDefault();
+                Log.i("AAA", sender + " + " + response);
                 smsManager.sendTextMessage(sender, null, response, null, null);
+
+
+
+
             }
         }
     }

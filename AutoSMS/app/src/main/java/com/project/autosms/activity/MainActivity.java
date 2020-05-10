@@ -1,8 +1,13 @@
 package com.project.autosms.activity;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -16,10 +21,13 @@ import com.project.autosms.util.SerializeHandler;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -69,10 +77,10 @@ public class MainActivity extends AppCompatActivity implements RecViewAdapter.On
 
         // Permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED)
-                    requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS}, RECEIVE_SMS_CODE);
-                if (checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
-                    requestPermissions(new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_CODE);
+            if (checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
+                requestPermissions(new String[]{Manifest.permission.SEND_SMS}, SEND_SMS_CODE);
+            if (checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED)
+                requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS}, RECEIVE_SMS_CODE);
         }
 
 
@@ -99,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements RecViewAdapter.On
 
         // Update listings
         records = SerializeHandler.readObject(this, "responses");
+        if (records == null) records = new ArrayList<>();
         rwAdapter = new RecViewAdapter(this, records, this);
         RecyclerView rw = (RecyclerView) findViewById(R.id.list);
         rw.setAdapter(rwAdapter);
@@ -107,10 +116,13 @@ public class MainActivity extends AppCompatActivity implements RecViewAdapter.On
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == SEND_SMS_CODE || requestCode == RECEIVE_SMS_CODE){
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                Toast.makeText(this, "Granted", Toast.LENGTH_LONG).show();
-            else
-                Toast.makeText(this, "Denied", Toast.LENGTH_LONG).show();
+            for (int grantResult : grantResults) {
+                if (grantResult == PackageManager.PERMISSION_DENIED) {
+                    Toast.makeText(this, "Denied", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+            Toast.makeText(this, "Granted", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -128,10 +140,43 @@ public class MainActivity extends AppCompatActivity implements RecViewAdapter.On
         if (id == R.id.action_settings) {
             // TODO: Implement settings
             // ...
+            // Send the response
+            android.os.SystemClock.sleep(5000);
+            sendNotif();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void sendNotif(){
+        // Notify the user
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "1")
+                .setContentTitle("Responded to 072342323")
+                .setContentText("\"" + "bye" + "\"")
+                .setSmallIcon(R.mipmap.transparent_icon)
+                .setColorized(true)
+                .setColor(Color.parseColor("#292f46"))
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O ) {
+            NotificationChannel notificationChannel = new NotificationChannel("1" , "Response", NotificationManager.IMPORTANCE_DEFAULT) ;
+            mBuilder.setChannelId("1");
+            assert nm != null;
+            nm.createNotificationChannel(notificationChannel) ;
+        }
+
+        // If the user clicks on the notification
+        Intent notificationIntent = new Intent(this, MainActivity.class)
+                .setAction(Intent.ACTION_MAIN)
+                .addCategory(Intent.CATEGORY_LAUNCHER)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        PendingIntent conPendingIntent = PendingIntent.getActivity(this,0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(conPendingIntent);
+
+        nm.notify(16712, mBuilder.build());
     }
 
     @Override
