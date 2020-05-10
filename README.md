@@ -17,7 +17,7 @@ AutoSMS is an Android app that:
 4. Run the app
     * in the [virtual emulator](https://developer.android.com/studio/run/emulator)  
       *or*
-    * on your [Android device](https://developer.android.com/training/basics/firstapp/running-app)
+    * on your [Android device](https://developer.android.com/studio/run/device)
     
 ## Usage
 1. Add a phone number to a person that bothers you.
