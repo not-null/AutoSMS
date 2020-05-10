@@ -35,3 +35,5 @@ AutoSMS is an Android app that:
 ## Extra features
 * 👋 Intuitive design - swipe to delete items
 * 🎯 Responsive animations
+
+
