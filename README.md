@@ -3,7 +3,7 @@
 [![platform = android](https://img.shields.io/badge/platform-android-brightgreen.svg)](#)
 [![language = java](https://img.shields.io/badge/language-java-ffad3b.svg)](#)
 
-![AutoSMS banner](/README_res/banner.png?raw=true)
+![AutoSMS banner](/README_res/banner.png?raw=true)(#)
 
 ## About
 AutoSMS is an Android app that:
