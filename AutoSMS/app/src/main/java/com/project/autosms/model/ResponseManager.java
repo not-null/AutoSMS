@@ -14,26 +14,24 @@ public class ResponseManager {
 
         ArrayList<Record> records = SerializeHandler.readObject(context, FILENAME);
 
-        //Go through the records
+        // Go through the records
         for (Record r : records){
-            //If the number has responses
+            // If the number has responses
             if (nr.equals(r.getNr())){
                 Log.i("MANAGER", "FOUND NR");
-                //Get the responses
+                // Get the responses
                 ArrayList<ResponseMapping> rms = r.getResponseMappings();
-                //Go through the responses
+                // Go through the responses
                 for (ResponseMapping rm : rms){
-                    //Check where to look for string
+                    // Check where to look for string
                     switch(rm.getPosition()){
                         case STARTS:
                             if (msg.toLowerCase().startsWith(rm.getString()))
                                 return rm.getResponse();
                             break;
                         case CONTAINS:
-                            Log.i("MANAGER", "CONTAINS");
                             if (msg.toLowerCase().contains(rm.getString()))
                                 return rm.getResponse();
-                            Log.i("MANAGER", "Match failed");
                             break;
                         case ENDS:
                             if (msg.toLowerCase().endsWith(rm.getString()))
@@ -44,7 +42,6 @@ public class ResponseManager {
             }
         }
 
-        //Bad practice?
-        return null;
+        return null; // TODO: Throw error instead of returning null
     }
 }

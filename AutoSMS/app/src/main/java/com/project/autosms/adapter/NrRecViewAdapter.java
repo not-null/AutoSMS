@@ -1,7 +1,6 @@
 package com.project.autosms.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ public class NrRecViewAdapter extends RecyclerView.Adapter<NrRecViewAdapter.View
     private Record record;
     private Context context;
 
-    //For writing to file
+    // For writing to file
     private ArrayList<Record> records;
 
     public NrRecViewAdapter(Context context, ArrayList<Record> records, int position) {
@@ -31,7 +30,7 @@ public class NrRecViewAdapter extends RecyclerView.Adapter<NrRecViewAdapter.View
         this.record = records.get(position);
     }
 
-    // inflates the row layout from xml when needed
+    // Inflates the row layout from XML when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -40,22 +39,21 @@ public class NrRecViewAdapter extends RecyclerView.Adapter<NrRecViewAdapter.View
         return new ViewHolder(view);
     }
 
-    // total number of rows
+    // Total number of rows
     @Override
     public int getItemCount() {
         return record.getResponseMappings().size();
     }
 
-    // binds the data to the TextView in each row
+    // Binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ResponseMapping rm = record.getResponseMappings().get(position);
         holder.incomingMessage.setText(String.format("%s \"%s\"", rm.getPosition().toString(), rm.getString()));
         holder.response.setText(String.format("Response: \"%s\"", rm.getResponse()));
-
-        Log.i("---KOLLA---", "Binded " + record.getNr() + " with " + record.getResponseMappings().size() + " records.");
     }
 
+    // The object that holds the individual record
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView incomingMessage;
@@ -71,9 +69,4 @@ public class NrRecViewAdapter extends RecyclerView.Adapter<NrRecViewAdapter.View
             this.responseItem = (LinearLayout) itemView.findViewById(R.id.responseItem);
         }
     }
-
-    public interface OnRecordListener {
-        void onRecordClick(int position);
-    }
-
 }

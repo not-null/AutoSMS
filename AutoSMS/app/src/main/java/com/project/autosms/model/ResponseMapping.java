@@ -45,9 +45,11 @@ public class ResponseMapping implements Serializable, Cloneable {
         return position.toString() + " " + string + " : " + response;
     }
 
+    // Creates a deep copy
     @NonNull
     @Override
     protected Object clone() throws CloneNotSupportedException {
+
         ResponseMapping clone = new ResponseMapping(this.string, this.response, Position.valueOf(this.position.toString()));
 
         return clone;

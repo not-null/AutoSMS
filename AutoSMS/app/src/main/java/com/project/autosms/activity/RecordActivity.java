@@ -32,7 +32,7 @@ public class RecordActivity extends AppCompatActivity {
     private int position;
     private NrRecViewAdapter rwAdapter;
 
-    //For backup
+    // For backup, when restoring deleted items
     private int lastDelete;
     private ResponseMapping deletedResponse;
 
@@ -43,11 +43,11 @@ public class RecordActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Get data from previous activity
+        // Get data from previous activity
         this.records = (ArrayList<Record>) getIntent().getSerializableExtra("records");
         this.position = getIntent().getIntExtra("position", 0);
 
-        //Setup the recyclerview
+        // Setup the recycler view
         RecyclerView rw = (RecyclerView) findViewById(R.id.list);
         rwAdapter = new NrRecViewAdapter(this, records, position);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -58,10 +58,11 @@ public class RecordActivity extends AppCompatActivity {
         rw.addItemDecoration(dividerItemDecoration);
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(rw);
 
-        //Set the title
+        // Set the title
         TextView nrTitle = findViewById(R.id.phoneNrTitle);
         nrTitle.setText(records.get(position).getNr());
 
+        // Setup "add" button
         FloatingActionButton addButton = findViewById(R.id.fab);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +77,8 @@ public class RecordActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        // check if the request code is same as what is passed  here it is 2
+
+        // Check if a new response has been added, and save it
         if(requestCode == 1 && resultCode == RESULT_OK)
         {
             ResponseMapping rm = (ResponseMapping) data.getSerializableExtra("response");
@@ -100,19 +102,18 @@ public class RecordActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // TODO: Implement settings
+            // ...
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    // Handle swiping to delete list items
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {

@@ -9,10 +9,8 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.project.autosms.R;
-import com.project.autosms.model.Position;
 import com.project.autosms.adapter.RecViewAdapter;
 import com.project.autosms.model.Record;
-import com.project.autosms.model.ResponseMapping;
 import com.project.autosms.util.SerializeHandler;
 
 import androidx.annotation.NonNull;
@@ -22,7 +20,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,14 +29,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements RecViewAdapter.OnRecordListener {
-    private final int RECEIVE_SMS_CODE = 420;
+    private final int RECEIVE_SMS_CODE = 1336;
     private final int SEND_SMS_CODE = 1337;
 
     private ArrayList<Record> records;
 
     private RecViewAdapter rwAdapter;
 
-    //For backup
+    // For backup when restoring deleted items
     private int lastDelete;
     private Record deletedRecord;
 
@@ -50,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements RecViewAdapter.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Setup "add" button
         FloatingActionButton addButton = findViewById(R.id.fab);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,16 +57,17 @@ public class MainActivity extends AppCompatActivity implements RecViewAdapter.On
             }
         });
 
+        // Setup numbers list
         RecyclerView rw = (RecyclerView) findViewById(R.id.list);
         rw.setLayoutManager(new LinearLayoutManager(this));
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(rw);
 
-        addTestData();
-
+        // Setup switch
         Switch mySwitch = (Switch)findViewById(R.id.simpleSwitch);
         mySwitch.setChecked(true);
+        //TODO: Implement on/off functionality
 
-        //PERMISSIONS
+        // Permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED)
                     requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS}, RECEIVE_SMS_CODE);
@@ -83,7 +82,8 @@ public class MainActivity extends AppCompatActivity implements RecViewAdapter.On
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        // check if the request code is same as what is passed
+
+        // Check if a new number has been added, and save it
         if(requestCode == 1 && resultCode == RESULT_OK)
         {
             String nr = data.getStringExtra("nr");
@@ -97,12 +97,11 @@ public class MainActivity extends AppCompatActivity implements RecViewAdapter.On
     protected void onResume() {
         super.onResume();
 
+        // Update listings
         records = SerializeHandler.readObject(this, "responses");
         rwAdapter = new RecViewAdapter(this, records, this);
         RecyclerView rw = (RecyclerView) findViewById(R.id.list);
         rw.setAdapter(rwAdapter);
-
-        Log.i("AAAA", records.get(0).getNr());
     }
 
     @Override
@@ -124,57 +123,27 @@ public class MainActivity extends AppCompatActivity implements RecViewAdapter.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            addTestData();
-            rwAdapter.notifyDataSetChanged();
+            // TODO: Implement settings
+            // ...
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void addTestData() {
-        Record r1 = new Record("+46793358714", new ResponseMapping("Hej", "Hej på dig!", Position.CONTAINS));
-        r1.addResponseMapping(new ResponseMapping("Tja", "Tja tja", Position.CONTAINS));
-        r1.addResponseMapping(new ResponseMapping("Hejdå", "Vi ses!", Position.CONTAINS));
-
-        Record r2 = new Record("+46738295802", new ResponseMapping("Hej", "Hej på dig!", Position.STARTS));
-        r2.addResponseMapping(new ResponseMapping("Hur mår du?", "Jag mår bra", Position.CONTAINS));
-        r2.addResponseMapping(new ResponseMapping("vi ses", "Hejdå, vi ses!", Position.ENDS));
-
-        Record r3 = new Record("+46702846192", new ResponseMapping("Hej", "Hej på dig!", Position.STARTS));
-        r3.addResponseMapping(new ResponseMapping("Puss", "Puss puss", Position.CONTAINS));
-        r3.addResponseMapping(new ResponseMapping("Kram", "Kram mitt hjärta", Position.ENDS));
-
-        Record r4 = new Record("+46751720457", new ResponseMapping("Hej", "Hej, pappa!", Position.CONTAINS));
-        r4.addResponseMapping(new ResponseMapping("Hur mår du", "Bara bra, tack!", Position.CONTAINS));
-        r4.addResponseMapping(new ResponseMapping("Är du hungrig", "Självklart!", Position.CONTAINS));
-
-        records = new ArrayList<>();
-        records.add(r1);
-        records.add(r2);
-        records.add(r3);
-        records.add(r4);
-
-        SerializeHandler.saveObject(this, records, "responses");
-        ArrayList<Record> test = SerializeHandler.readObject(this, "responses");
-        System.out.println(test.get(0).getResponseMappings().get(0).getString());
-    }
-
     @Override
     public void onRecordClick(int position) {
+        // When you click on a list item
         Intent intent = new Intent(this, RecordActivity.class);
         intent.putExtra("records", records);
         intent.putExtra("position", position);
         startActivity(intent);
     }
 
+    // Handle swiping to delete list items
     private ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {

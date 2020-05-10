@@ -9,6 +9,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ *  Utility class that handles reading and writing to disk.
+ */
+
 public class SerializeHandler {
 
     /**

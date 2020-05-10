@@ -17,14 +17,15 @@ public class NewNumberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_number);
 
-        //Default result if it isn't saved
+        // Default result if it isn't saved
         setResult(RESULT_CANCELED);
 
-        Button saveButton =(Button)findViewById(R.id.saveButton);
+        // When the user clicks "save"
+        Button saveButton = (Button)findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                //Check if allowed also..
+                //TODO: Check if allowed (no/faulty input etc.)
 
                 String nr = ((EditText) findViewById(R.id.nr)).getText().toString();
 

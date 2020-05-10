@@ -21,20 +21,23 @@ public class NewResponseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_response);
 
-        //Default result if it isn't saved
+        // Default result if it isn't saved
         setResult(RESULT_CANCELED);
 
+        // Setup drop down
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.positions, R.layout.spinner_item);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         spinner.setAdapter(spinnerAdapter);
 
+        // When the user clicks "save"
         Button saveButton =(Button)findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                //Check if allowed also..
+                // TODO: Check if allowed (no/faulty input etc.)
 
+                // Create mapping
                 String message = ((EditText) findViewById(R.id.message)).getText().toString();
                 String response = ((EditText) findViewById(R.id.response)).getText().toString();
                 Position pos = Position.valueOf(((Spinner) findViewById(R.id.spinner)).getSelectedItem().toString());

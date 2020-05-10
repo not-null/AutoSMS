@@ -23,7 +23,6 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHold
 
     private OnRecordListener onRecordListener;
 
-    // data is passed into the constructor
     public RecViewAdapter(Context context, ArrayList<Record> data, OnRecordListener onRecordListener) {
         this.context = context;
         this.records = data;
@@ -31,7 +30,7 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHold
         this.onRecordListener = onRecordListener;
     }
 
-    // inflates the row layout from xml when needed
+    // Inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -40,22 +39,21 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHold
         return new ViewHolder(view, onRecordListener);
     }
 
-    // total number of rows
+    // Total number of rows
     @Override
     public int getItemCount() {
         return records.size();
     }
 
-    // binds the data to the TextView in each row
+    // Binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Record record = records.get(position);
         holder.phoneNr.setText(record.getNr());
         holder.nrOfRecords.setText(record.getResponseMappings().size() + " response" + (record.getResponseMappings().size() != 1 ? "s" : ""));
-
-        Log.i("---KOLLA---", "Binded " + record.getNr() + " with " + record.getResponseMappings().size() + " records.");
     }
 
+    // The object that holds the individual record
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView phoneNr;
@@ -79,7 +77,6 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecViewAdapter.ViewHold
 
         @Override
         public void onClick(View v) {
-            Log.i("BOOMBOOM", "onClick: CLICK CLACK");
             onRecordListener.onRecordClick(getAdapterPosition());
         }
     }

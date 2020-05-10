@@ -30,44 +30,42 @@ public class SMSReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("YALLA", "onReceive: GOT TEXT");
-        
-        
-        //---get the SMS message passed in---
+        // Get the SMS message passed in
         Bundle bundle = intent.getExtras();
 
         SmsMessage[] msgs;
-        Object pdus[];
+        Object[] pdus;
 
         if (bundle != null) {
-            //---retrieve the SMS message received---
-            if (Build.VERSION.SDK_INT >= 19) //KITKAT
+            // Retrieve the SMS message received
+            if (Build.VERSION.SDK_INT >= 19) // For KITKAT
                 msgs = Telephony.Sms.Intents.getMessagesFromIntent(intent);
             else {
-                //For old versions..
+                // For old versions
                 pdus = (Object[]) bundle.get("pdus");
                 msgs = new SmsMessage[pdus.length];
                 msgs[0] = SmsMessage.createFromPdu((byte[]) pdus[0]);
             }
 
-            //Only uses the first SMS?..
-            SmsMessage sms = msgs[0];
+            // Get information from the SMS
+            SmsMessage sms = msgs[0]; // TODO: Check if only using the first SMS impacts functionality
             String sender = sms.getOriginatingAddress();
             String message = sms.getMessageBody();
 
+            // Get the appropriate response
             String response = ResponseManager.getResponse(sender, message, context);
 
             if (response != null) {
                 System.out.println("Responding to " + sender);
 
-                //Notify the user
+                // Notify the user
                 NotificationManager nm = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "1")
-                .setContentTitle("Responded to " + sender)
-                .setContentText("\"" + response + "\"")
-                .setSmallIcon(R.mipmap.transparent_icon)
-                .setColorized(true)
-                .setColor(Color.parseColor("#292f46"));
+                    .setContentTitle("Responded to " + sender)
+                    .setContentText("\"" + response + "\"")
+                    .setSmallIcon(R.mipmap.transparent_icon)
+                    .setColorized(true)
+                    .setColor(Color.parseColor("#292f46"));
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O ) {
                     NotificationChannel notificationChannel = new NotificationChannel("1" , "Response", NotificationManager.IMPORTANCE_DEFAULT) ;
@@ -76,7 +74,7 @@ public class SMSReceiver extends BroadcastReceiver {
                     nm.createNotificationChannel(notificationChannel) ;
                 }
 
-                //Om användare klickar på notis
+                // If the user clicks on the notification
                 Intent notificationIntent = new Intent(context, MainActivity.class)
                 .setAction(Intent.ACTION_MAIN)
                 .addCategory(Intent.CATEGORY_LAUNCHER)
@@ -87,7 +85,7 @@ public class SMSReceiver extends BroadcastReceiver {
 
                 nm.notify(createID(), mBuilder.build());
 
-                /**SEND SMS*/
+                // Send the response
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(sender, null, response, null, null);
             }

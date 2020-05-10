@@ -10,19 +10,18 @@ public class Record implements Serializable, Cloneable {
     private String nr;
     private ArrayList<ResponseMapping> responseMappings;
 
-    //When loading from file
+    // Used when loading from file
     public Record(String nr, ArrayList<ResponseMapping> responseMappings) {
         this.nr = nr;
         this.responseMappings = responseMappings;
     }
 
-    //When..?
     public Record(String nr) {
         this.nr = nr;
         this.responseMappings = new ArrayList<>();
     }
 
-    //When cretaing the first response
+    // Used when creating the first response
     public Record(String nr, ResponseMapping responseMapping) {
         this.nr = nr;
         this.responseMappings = new ArrayList<>();
@@ -55,6 +54,7 @@ public class Record implements Serializable, Cloneable {
         return nr + "\n" + Arrays.toString(responseMappings.toArray());
     }
 
+    // Creates a deep copy
     @NonNull
     @Override
     protected Object clone() throws CloneNotSupportedException {
