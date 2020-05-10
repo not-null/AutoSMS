@@ -15,7 +15,8 @@ AutoSMS is an Android app that:
 2. Install [Android Studio](https://developer.android.com/studio) or similar software.
 3. Open the cloned project.
 4. Run the app
-    * in the [virtual emulator](https://developer.android.com/studio/run/emulator)  
+    * in the [virtual emulator](https://developer.android.com/studio/run/emulator)
+    
     or
     * [on your Android device](https://developer.android.com/training/basics/firstapp/running-app)
     
@@ -25,8 +26,7 @@ AutoSMS is an Android app that:
     * Specify a string that the incoming message should contain - *leave blank for all messages*.
     * Choose whether the message should **contain**, **start with**, or **end with** your string.
     * Write a custom response.
-
-**Done!** Now, you will get a notification when the app responds to a message! 🎉
+3. **Done!** Now, you will get a notification when the app responds to a message! 🎉
 
 ## Demo
 
